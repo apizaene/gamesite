@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ky" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ITadis</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080f;--tx:#e8ecff;--mu:#8d95b8;--gl:rgba(255,255,255,.06);--bd:rgba(255,255,255,.12);--a:#86e01e;--b:#4a4af0;--sh:0 20px 40px rgba(0,0,0,.5);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme=light]{--bg:#f1f3f9;--tx:#161a2e;--mu:#5a6280;--gl:rgba(255,255,255,.85);--bd:rgba(0,0,0,.08);--a:#4c9a00;--b:#2a2ad0;--sh:0 10px 30px rgba(30,40,90,.12)}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Manrope,system-ui,sans-serif;overflow-x:hidden;transition:background .4s}
+h1,h2,h3,.logo{font-family:'Chakra Petch',system-ui,sans-serif;margin:0}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1180px;margin:auto;padding:0 20px}
+section{padding:70px 0}
+h2{font-size:clamp(26px,4vw,38px);margin-bottom:26px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--gl);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd)}
+nav .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.logo{font-size:22px;font-weight:700;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:auto}
+.links{display:flex;gap:4px}
+.links a,.ib{background:none;border:0;padding:8px 12px;border-radius:10px;color:var(--mu);text-decoration:none;font-weight:600;font-size:14px}
+.links a:hover,.ib:hover{color:var(--tx);background:var(--gl)}
+.ib{font-size:18px;min-width:40px;min-height:40px}
+#sq{width:0;opacity:0;padding:0;border:1px solid var(--bd);background:var(--gl);border-radius:10px;height:38px;transition:.3s}
+#sq.open{width:180px;opacity:1;padding:0 12px}
+#burger{display:none}
+.hero{position:relative;padding:90px 0 70px;overflow:hidden}
+#pc{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(38px,7vw,84px);line-height:1;text-shadow:0 0 30px rgba(134,224,30,.35)}
+.hero p{color:var(--mu);max-width:480px;margin:20px 0 28px}
+.btn{background:linear-gradient(90deg,var(--a),var(--b));color:#06070d;border:0;padding:13px 26px;border-radius:12px;font-weight:700;box-shadow:0 0 22px rgba(134,224,30,.3);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(74,74,240,.55)}
+.btn.ghost{background:var(--gl);color:var(--tx);border:1px solid var(--bd);box-shadow:none}
+.btn.sm{padding:9px 18px;font-size:14px}
+.feat{background:var(--gl);border:1px solid var(--bd);border-radius:22px;padding:30px;text-align:center;backdrop-filter:blur(14px);box-shadow:var(--sh);animation:fl 5s ease-in-out infinite;transform:perspective(900px) rotateY(-8deg)}
+.feat .big{font-size:84px;filter:drop-shadow(0 0 20px var(--a))}
+@keyframes fl{50%{translate:0 -14px}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;align-items:center}
+.chip{background:var(--gl);border:1px solid var(--bd);border-radius:20px;padding:7px 16px;font-size:14px}
+.chip.on{background:var(--a);color:#06070d;border-color:var(--a)}
+select{background:var(--gl);border:1px solid var(--bd);border-radius:10px;padding:7px 10px}
+select option{color:#111}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.cat{background:var(--gl);border:1px solid var(--bd);border-radius:16px;padding:22px 10px;text-align:center;font-weight:600;transition:.25s}
+.cat:hover{border-color:var(--a);box-shadow:0 0 22px rgba(134,224,30,.25);transform:translateY(-4px)}
+.cat span{display:block;font-size:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px;perspective:1000px}
+.card{position:relative;background:var(--gl);border:1px solid var(--bd);border-radius:20px;padding:16px;box-shadow:var(--sh);transition:transform .15s,box-shadow .3s,border-color .3s;transform-style:preserve-3d;cursor:pointer}
+.card:hover{border-color:var(--a);box-shadow:0 0 30px rgba(134,224,30,.25),var(--sh)}
+.thumb{height:130px;border-radius:14px;background:radial-gradient(circle at 30% 20%,rgba(74,74,240,.5),rgba(134,224,30,.12));display:grid;place-items:center;font-size:62px;overflow:hidden;margin-bottom:12px}
+.thumb i{font-style:normal;transition:transform .4s;transform:translateZ(40px)}
+.card:hover .thumb i{transform:scale(1.25) translateZ(40px)}
+.card h3{font-size:19px}
+.meta{color:var(--mu);font-size:13px;margin:4px 0 8px}
+.card p:not(.meta){font-size:14px;margin:0 0 14px;color:var(--mu)}
+.fav{position:absolute;top:24px;right:24px;background:rgba(0,0,0,.45);border:0;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px}
+.fav.on{color:#ff4d79}
+.badge{display:inline-block;background:#ff7a3d;color:#fff;border-radius:8px;padding:2px 9px;font-size:12px;font-weight:700}
+.empty{color:var(--mu);grid-column:1/-1;text-align:center;padding:30px}
+.pop{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.pi{display:flex;gap:14px;align-items:center;background:var(--gl);border:1px solid var(--bd);border-radius:16px;padding:14px}
+.pi .e{font-size:36px}.pi div{flex:1}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.fact{background:var(--gl);border:1px solid var(--bd);border-radius:16px;padding:20px;animation:up .6s both}
+@keyframes up{from{opacity:0;translate:0 20px}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;text-align:center}
+.stat{background:var(--gl);border:1px solid var(--bd);border-radius:16px;padding:26px}
+.stat b{display:block;font:700 38px 'Chakra Petch';color:var(--a)}
+.lb{background:var(--gl);border:1px solid var(--bd);border-radius:18px;overflow:hidden}
+.lb div{display:flex;gap:14px;padding:14px 20px;border-bottom:1px solid var(--bd)}
+.lb div:last-child{border:0}.lb span:nth-child(2){flex:1}
+.daily{background:linear-gradient(135deg,rgba(74,74,240,.3),rgba(134,224,30,.15));border:1px solid var(--bd);border-radius:24px;padding:36px;text-align:center}
+#cd{font:700 44px 'Chakra Petch';margin:14px 0;color:var(--a)}
+footer{border-top:1px solid var(--bd);padding:44px 0 30px;color:var(--mu);font-size:14px}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:26px}
+footer a{display:block;color:var(--mu);text-decoration:none;padding:3px 0;cursor:pointer}
+footer a:hover{color:var(--a)}
+.soc{display:flex;gap:10px;margin-top:12px}.soc button{background:var(--gl);border:1px solid var(--bd);border-radius:10px;width:38px;height:38px}
+#md{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:100;display:none;place-items:center;padding:16px}
+#md.open{display:grid}
+.mb{background:var(--bg);border:1px solid var(--bd);border-radius:22px;max-width:620px;width:100%;max-height:92vh;overflow:auto;padding:28px;position:relative;animation:pop .3s}
+@keyframes pop{from{opacity:0;transform:scale(.9) translateY(20px)}}
+#x{position:absolute;top:12px;right:12px}
+.mb ul{color:var(--mu);padding-left:20px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:12px 0}
+.tb{display:grid;grid-template-columns:repeat(3,92px);gap:8px;justify-content:center}
+.c{height:92px;font:700 40px 'Chakra Petch';background:var(--gl);border:1px solid var(--bd);border-radius:14px}
+.c.w{background:var(--a);color:#06070d;animation:pu .5s infinite alternate}
+@keyframes pu{to{transform:scale(1.08)}}
+.st{text-align:center;min-height:24px;color:var(--a);font-weight:600}
+canvas.sn{display:block;margin:auto;max-width:100%;background:#0b0e1c;border:2px solid var(--a);border-radius:12px}
+.pad{display:grid;grid-template-columns:repeat(3,52px);gap:6px;justify-content:center}
+.pad button,.bar>button:not(.btn){background:var(--gl);border:1px solid var(--bd);border-radius:10px;min-height:44px;padding:0 14px}
+.rps button{font-size:42px;width:84px;height:84px;background:var(--gl);border:1px solid var(--bd);border-radius:18px;transition:.2s}
+.rps button:hover{transform:translateY(-5px) rotate(-6deg)}
+.mg{display:grid;grid-template-columns:repeat(4,70px);gap:8px;justify-content:center;perspective:600px}
+.mc{height:70px;position:relative;transform-style:preserve-3d;transition:transform .45s;border:0;background:none;padding:0}
+.mc.f{transform:rotateY(180deg)}
+.mc>*{position:absolute;inset:0;display:grid;place-items:center;border-radius:12px;backface-visibility:hidden;font-size:30px}
+.mc .fr{background:linear-gradient(135deg,var(--b),var(--a))}
+.mc .bk{background:var(--gl);border:1px solid var(--a);transform:rotateY(180deg)}
+.mc.m .bk{background:rgba(134,224,30,.3)}
+#toast{position:fixed;bottom:24px;left:50%;translate:-50% 90px;background:var(--a);color:#06070d;padding:10px 20px;border-radius:12px;z-index:200;transition:.3s;font-weight:600}
+#toast.s{translate:-50% 0}
+@media(max-width:820px){
+.links{position:fixed;top:64px;left:0;right:0;flex-direction:column;background:var(--bg);padding:12px;border-bottom:1px solid var(--bd);display:none}
+.links.open{display:flex}
+#burger{display:block}
+.hero .wrap{grid-template-columns:1fr}.feat{transform:none}
+.fg{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}
+section{padding:46px 0}.btn{min-height:46px}
+#sq.open{width:120px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo img{height:42px;width:auto;background:#fff;border-radius:10px;padding:2px}
+.gd{display:grid;gap:6px;justify-content:center;touch-action:none}
+.tl{width:70px;height:70px;border-radius:10px;background:var(--gl);border:1px solid var(--bd);display:grid;place-items:center;font:700 22px 'Chakra Petch'}
+.cl{background:var(--gl);border:1px solid var(--bd);border-radius:12px;font:700 22px 'Chakra Petch';color:var(--tx)}
+@media(max-width:820px){.ib{min-width:36px;padding:6px}#pf{display:none}nav .wrap{gap:4px}.mb{padding:18px}.hero{padding:50px 0 40px}}
+@media(max-width:480px){.logo span{display:none}.wrap{padding:0 14px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+<a class="logo" href="#home" data-go="home"><img src="data:image/jpeg;base64,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" alt="ITadis"><span>ITadis</span></a>
+<div class="links" id="links">
+<a href="#home" data-go="home">Home</a><a href="#games" data-go="games">All Games</a><a href="#popular" data-go="popular">Popular</a><a href="#games" data-go="top">Top Rated</a><a href="#favs" data-go="favs">Favorites</a><a href="#cats" data-go="cats">Categories</a><a href="#about" data-go="about">About</a>
+</div>
+<input id="sq" type="search" placeholder="Search games" aria-label="Search games">
+<button class="ib" id="sb" aria-label="Search">🔍</button>
+<button class="ib" id="snd" aria-label="Sound">🔊</button>
+<button class="ib" id="th" aria-label="Theme">🌙</button>
+<button class="ib" data-go="favs" aria-label="Favorites">❤️<sup id="fc"></sup></button>
+<button class="ib" id="pf" aria-label="Profile">👤</button>
+<button class="ib" id="lg">РУС</button>
+<button class="ib" id="burger" aria-label="Menu">☰</button>
+</div></nav>
+
+<header class="hero" id="home"><canvas id="pc"></canvas><div class="wrap">
+<div>
+<h1>PLAY. COMPETE. HAVE FUN.</h1>
+<p>ITadis is a free arcade in your browser. Pick a game, beat your high score and save your favorites. No downloads, no sign-up.</p>
+<button class="btn" id="hp">Play Now</button> <button class="btn ghost" data-go="games">Explore Games</button>
+</div>
+<div class="feat"><div class="big">❌⭕</div><h3>Featured Game: Tic-Tac-Toe</h3><p style="margin:10px auto 18px">Only 3 marks stay on the board. Think ahead!</p><button class="btn sm" data-open="ttt">Play Now</button></div>
+</div></header>
+
+<section id="cats"><div class="wrap"><h2>Game Categories</h2><div class="cats" id="catg"></div></div></section>
+
+<section id="games"><div class="wrap"><h2>Top Games</h2>
+<div class="chips" id="chips"></div>
+<div class="chips"><label for="so">Sort by</label><select id="so"><option value="pop">Most Popular</option><option value="rate">Highest Rated</option><option value="new">Newest</option><option value="az">A-Z</option></select></div>
+<div class="grid" id="grid"></div></div></section>
+
+<section id="popular"><div class="wrap"><h2>Popular Games</h2><div class="pop" id="pop"></div></div></section>
+<section id="favs"><div class="wrap"><h2>Favorites</h2><div class="grid" id="fg"></div></div></section>
+<section id="facts"><div class="wrap"><h2>Did You Know?</h2><div class="facts" id="fa"></div></div></section>
+<section id="stats"><div class="wrap"><div class="stats">
+<div class="stat"><b data-n="12" data-s="+">0</b>🎮 Games</div><div class="stat"><b data-n="10000" data-s="+">0</b>👥 Players</div><div class="stat"><b data-n="50000" data-s="+">0</b>🏆 Games Played</div><div class="stat"><b data-n="4.8" data-d="1">0</b>⭐ Average Rating</div>
+</div></div></section>
+<section id="board"><div class="wrap"><h2>Leaderboard</h2><div class="lb" id="lb"></div></div></section>
+<section id="daily"><div class="wrap"><div class="daily"><h2 style="margin-bottom:8px">Daily Challenge</h2><p>Today's Challenge: Beat the Snake high score!</p><div id="cd">00:00:00</div><p>Reward: 🏅 Daily Champion badge</p><button class="btn" data-open="snake">Play Snake</button></div></div></section>
+<section id="about"><div class="wrap"><h2>About ITadis</h2><p style="max-width:640px;color:var(--mu)">ITadis learning center game portal. Play, learn and train your logic. Your favorites, language, theme and high scores stay in your browser.</p></div></section>
+
+<footer><div class="wrap"><div class="fg">
+<div><div class="logo" style="margin:0 0 8px"><img src="data:image/jpeg;base64,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" alt="ITadis"><span>ITadis</span></div>ITadis learning center: play, learn and code.<div class="soc"><button data-t="Social links are demo only">𝕏</button><button data-t="Social links are demo only">▶</button><button data-t="Social links are demo only">✉</button></div></div>
+<div><b>Navigate</b><a data-go="home">Home</a><a data-go="games">All Games</a><a data-go="favs">Favorites</a></div>
+<div><b>Categories</b><a data-cat="Puzzle">Puzzle</a><a data-cat="Arcade">Arcade</a><a data-cat="Classic">Classic</a></div>
+<div><b>Legal</b><a data-t="Privacy Policy: this demo stores data only in your browser">Privacy Policy</a><a data-t="Terms of Service: play fair and have fun">Terms of Service</a><a data-t="Contact: hello@itadis.example">Contact</a></div>
+</div><p style="text-align:center;margin-top:30px">© 2026 ITadis. All Rights Reserved.</p></div></footer>
+
+<div id="md"><div class="mb" id="mb"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ===== Helpers & storage ===== */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const S={favs:ls.get('gz_favs',[]),sound:ls.get('gz_sound',true),theme:ls.get('gz_theme','dark'),f:'all',sort:'pop',q:''};
+function toast(t){const e=$('#toast');e.textContent=tt(t);e.classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('s'),2200)}
+
+/* ===== Sound (Web Audio) ===== */
+let ac;
+function beep(f=440,d=.12,t='sine'){if(!S.sound)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.stop(ac.currentTime+d)}catch(e){}}
+const sfx={click:()=>beep(520,.06),move:()=>beep(380,.08),flip:()=>beep(700,.05),eat:()=>beep(880,.07,'square'),lose:()=>beep(160,.4,'sawtooth'),win:()=>[523,659,784].forEach((f,i)=>setTimeout(()=>beep(f,.15),i*110))};
+
+/* ===== Game data ===== */
+const mk=(id,icon,cats,rating,plays,n,diff,T,D,C,F)=>({id,icon,cats,rating,plays,n,diff,T,D,C,F});
+const G=[
+mk('ttt','❌',['Classic','Strategy','Multiplayer'],4.8,32400,1,'Medium',['Крестик-нолик','Крестики-нолики'],['Үч белгини катарга тизиңиз. Тактада белгилериңиздин 3үсү гана калат.','Выстройте три знака в ряд. На поле остаётся только 3 ваших знака.'],['Уячаны басыңыз.','Нажмите на клетку.'],[['4-белги коюлганда эң эски белги жок болот.','При 4-м знаке самый старый исчезает.'],['Эки киши же компьютерге каршы ойнолот.','Играют вдвоём или против компьютера.']]),
+mk('snake','🐍',['Classic','Arcade','Action'],4.9,41800,2,'Medium',['Жылан','Змейка'],['Жегиле, чоңоюңуз, өзүңүзгө тийбеңиз.','Ешьте, растите и не касайтесь себя.'],['Жебелер же WASD. Телефондо баскычтар.','Стрелки или WASD. На телефоне кнопки.'],[['Телефондордо абдан популярдуу болгон.','Стала очень популярной на телефонах.']]),
+mk('rps','✂️',['Arcade','Multiplayer'],4.5,18900,3,'Easy',['Таш, кайчы, кагаз','Камень, ножницы, бумага'],['Компьютерге каршы тез дуэль.','Быстрая дуэль с компьютером.'],['Жестти басыңыз.','Нажмите на жест.'],[['Таш кайчыны, кайчы кагазды, кагаз ташты жеңет.','Камень бьёт ножницы, ножницы бумагу, бумага камень.']]),
+mk('memory','🃏',['Puzzle','Cards','Brain Games'],4.7,22100,4,'Medium',['Эс тутум карталары','Карточки памяти'],['Бардык жуптарды табыңыз.','Найдите все пары.'],['Картаны басыңыз.','Нажмите на карточку.'],[['Көңүл топтоого жардам берет.','Тренирует концентрацию.']]),
+mk('g2048','🔢',['Puzzle','Brain Games'],4.8,29700,5,'Hard',['2048','2048'],['Плиткаларды кошуп 2048ге жетиңиз.','Объединяйте плитки до 2048.'],['Жебелер же экранды сүрүңүз.','Стрелки или свайп.'],[['Браузердик башваяк катары жаралган.','Создана как браузерная головоломка.']]),
+mk('c4','🔴',['Strategy','Multiplayer'],4.6,15300,6,'Medium',['4 катарда','Четыре в ряд'],['4 чекитти катарга тизиңиз.','Соберите 4 фишки в ряд.'],['Мамычаны басыңыз.','Нажмите на колонку.'],[['Тактада 7 мамыча, 6 катар бар.','На поле 7 колонок и 6 рядов.']]),
+mk('mole','🐹',['Arcade','Action'],4.4,12800,7,'Easy',['Кемирүүчүнү ур','Поймай крота'],['20 секундада көбүрөөк уруңуз.','Поймайте больше за 20 секунд.'],['Чыккан жаныбарды басыңыз.','Нажмите на крота.'],[['Тактыкты жана ылдамдыкты өстүрөт.','Тренирует внимание и скорость.']]),
+mk('react','⚡',['Arcade','Action'],4.5,11200,8,'Easy',['Реакция ылдамдыгы','Скорость реакции'],['Жашыл болгондо тез басыңыз.','Нажмите, как только станет зелёным.'],['Чоң баскычты басыңыз.','Нажмите на большую кнопку.'],[['Орточо реакция 200–250 мс.','Средняя реакция 200–250 мс.']]),
+mk('flappy','🐤',['Arcade','Action'],4.7,26500,9,'Hard',['Flappy Bird','Flappy Bird'],['Түтүктөрдүн ортосунан учуп өтүңүз.','Пролетайте между трубами.'],['Экранды басыңыз же Space.','Нажмите на экран или Space.'],[['Бир тийүү, бир секирүү.','Одно касание, один взмах.']]),
+mk('quiz','💻',['Programming','Brain Games'],4.9,9800,10,'Medium',['Код викторина','Кодовая викторина'],['Код эмне чыгарарын тап (JS, Python).','Угадайте вывод кода (JS, Python).'],['Жоопту тандаңыз.','Выберите ответ.'],[['JavaScriptте typeof null объект кайтарат.','В JavaScript typeof null возвращает object.']]),
+mk('bin','🧮',['Programming','Puzzle'],4.8,8700,11,'Medium',['Экилик сандар','Двоичные числа'],['Санды экилик системага которуңуз.','Переведите число в двоичную систему.'],['Биттерди басып өзгөртүңүз.','Нажимайте на биты.'],[['Компьютер бардыгын 0 жана 1 менен сактайт.','Компьютер хранит всё в нулях и единицах.']]),
+mk('type','⌨️',['Programming','Arcade'],4.6,7900,12,'Medium',['Код терүү','Печать кода'],['Код сабын тез жана так териңиз.','Быстро и точно набирайте код.'],['Клавиатурадан териңиз.','Печатайте на клавиатуре.'],[['Программисттер күнүнө миңдеген белги терет.','Программисты печатают тысячи символов в день.']])
+];
+const FACTS=["The first computer bug was a real moth found in 1947.","Tic-Tac-Toe dates back thousands of years in early forms.","Snake became extremely popular on mobile phones.","2048 was created as a browser puzzle game.","Memory games can help train concentration.","Arcade games played an important role in gaming history."];
+const CATS=[['🧠','Puzzle'],['🎯','Arcade'],['🐍','Classic'],['⚡','Action'],['🏆','Strategy'],['🎮','Multiplayer'],['🃏','Cards'],['🧩','Brain Games'],['💻','Programming']];
+const byId=id=>G.find(g=>g.id===id);
+
+/* ===== Rendering ===== */
+const isFav=id=>S.favs.includes(id);
+const card=g=>`<article class="card" data-open="${g.id}"><div class="thumb"><i>${g.icon}</i></div><button class="fav ${isFav(g.id)?'on':''}" data-fav="${g.id}" aria-label="Favorite ${g.T[0]}">♥</button><h3>${g.T[li()]}</h3><p class="meta">${tt(g.cats[0])} | ⭐ ${g.rating} | ${g.plays.toLocaleString()} ${tt('plays')}</p><p>${g.D[li()]}</p><button class="btn sm" data-open="${g.id}">Play</button></article>`;
+function render(){
+  let l=G.filter(g=>g.T.join(' ').toLowerCase().includes(S.q.trim().toLowerCase()));
+  if(S.f==='popular')l=l.filter(g=>g.plays>20000);
+  else if(S.f==='top')l=l.filter(g=>g.rating>=4.7);
+  else if(S.f==='fav')l=l.filter(g=>isFav(g.id));
+  else if(S.f!=='all')l=l.filter(g=>g.cats.includes(S.f));
+  const so={pop:(a,b)=>b.plays-a.plays,rate:(a,b)=>b.rating-a.rating,new:(a,b)=>b.n-a.n,az:(a,b)=>a.T[li()].localeCompare(b.T[li()])};
+  l.sort(so[S.sort]);
+  $('#grid').innerHTML=l.length?l.map(card).join(''):'<p class="empty">No games found.</p>';
+  const fl=G.filter(g=>isFav(g.id));
+  $('#fg').innerHTML=fl.length?fl.map(card).join(''):'<p class="empty">No favorite games yet.</p>';
+  $('#pop').innerHTML=[...G].sort(so.pop).map(g=>`<div class="pi"><span class="e">${g.icon}</span><div><span class="badge">🔥 Popular</span><h3>${g.T[li()]}</h3><span class="meta">👥 ${g.plays.toLocaleString()} ${tt('players')} | ⭐ ${g.rating}</span></div><button class="btn sm" data-open="${g.id}">Play</button></div>`).join('');
+  $$('.chip').forEach(c=>c.classList.toggle('on',c.dataset.f===S.f));
+  $('#fc').textContent=S.favs.length||'';
+  $('#lb').innerHTML=board().map((p,i)=>`<div><span>${['🥇','🥈','🥉'][i]||i+1}</span><span>${tt(p[0])}</span><b>${p[1].toLocaleString()} ${tt('points')}</b></div>`).join('');
+}
+function board(){const hs=ls.get('gz_snake',0)*100;const a=[['Player One',12450],['GamerX',10890],['Alex',9750],['Shadow',8920],['Player Pro',8400]];if(hs)a.push(['You',hs]);return a.sort((x,y)=>y[1]-x[1]).slice(0,6)}
+$('#chips').innerHTML=[['all','All'],['popular','Popular'],['top','Top Rated'],['fav','Favorites'],['Puzzle','Puzzle'],['Arcade','Arcade'],['Classic','Classic'],['Strategy','Strategy'],['Programming','Programming']].map(c=>`<button class="chip" data-f="${c[0]}">${c[1]}</button>`).join('');
+$('#catg').innerHTML=CATS.map(c=>`<button class="cat" data-cat="${c[1]}"><span>${c[0]}</span>${c[1]}</button>`).join('');
+$('#fa').innerHTML=FACTS.map((f,i)=>`<div class="fact" style="animation-delay:${i*.1}s">💡 <span>${f}</span></div>`).join('');
+
+/* ===== Global events ===== */
+const go=id=>{const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth'});$('#links').classList.remove('open')};
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-fav],[data-open],[data-go],[data-f],[data-cat],[data-t]');if(!t)return;
+  sfx.click();
+  if(t.dataset.fav){e.stopPropagation();const id=t.dataset.fav;S.favs=isFav(id)?S.favs.filter(x=>x!==id):[...S.favs,id];ls.set('gz_favs',S.favs);render();if($('#md').classList.contains('open')&&$('#mf'))$('#mf').textContent=tt(isFav(id)?'♥ Remove favorite':'♡ Add favorite');return}
+  if(t.dataset.open){openGame(t.dataset.open);return}
+  if(t.dataset.go){const g=t.dataset.go;if(g==='top'){S.f='top';render();go('games')}else{go(g==='favs'?'favs':g)}if(g!=='top')e.preventDefault();return}
+  if(t.dataset.f){S.f=t.dataset.f;render();return}
+  if(t.dataset.cat){S.f=t.dataset.cat;render();go('games');return}
+  if(t.dataset.t)toast(t.dataset.t);
+});
+document.addEventListener('mousemove',e=>{const c=e.target.closest('.card');if(!c)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`translateY(-8px) rotateX(${-y*12}deg) rotateY(${x*12}deg)`});
+document.addEventListener('mouseout',e=>{const c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget))c.style.transform=''});
+$('#so').onchange=e=>{S.sort=e.target.value;render()};
+$('#sb').onclick=()=>{const q=$('#sq');q.classList.toggle('open');if(q.classList.contains('open'))q.focus()};
+$('#sq').oninput=e=>{S.q=e.target.value;render();go('games')};
+$('#burger').onclick=()=>$('#links').classList.toggle('open');
+$('#hp').onclick=()=>openGame('ttt');
+$('#pf').onclick=()=>toast('Playing as Guest. Scores are saved in this browser.');
+function applyTheme(){document.documentElement.dataset.theme=S.theme;$('#th').textContent=S.theme==='dark'?'🌙':'☀️'}
+$('#th').onclick=()=>{S.theme=S.theme==='dark'?'light':'dark';ls.set('gz_theme',S.theme);applyTheme()};
+function applySound(){$('#snd').textContent=S.sound?'🔊':'🔇'}
+$('#snd').onclick=()=>{S.sound=!S.sound;ls.set('gz_sound',S.sound);applySound();sfx.click()};
+
+/* ===== Modal ===== */
+let cleanup=null;
+function openGame(id){
+  const g=byId(id);if(!g)return;const l=li();
+  $('#mb').innerHTML=`<button class="ib" id="x" aria-label="Close">✕</button><div style="font-size:50px">${g.icon}</div><h2 style="margin:4px 0 10px">${g.T[l]}</h2><div id="det"><p class="meta">${g.cats.map(tt).join(', ')} | ⭐ ${g.rating} | ${tt('Difficulty')}: ${tt(g.diff)}</p><p>${g.D[l]}</p><p><b>${tt('Controls')}:</b> ${g.C[l]}</p><h3>${tt('Facts')}</h3><ul>${g.F.map(f=>`<li>${f[l]}</li>`).join('')}</ul><div class="bar"><button class="btn" id="pl">Play</button><button class="btn ghost" id="mf" data-fav="${g.id}">${tt(isFav(g.id)?'♥ Remove favorite':'♡ Add favorite')}</button></div></div><div id="stage"></div>`;
+  $('#md').classList.add('open');$('#x').onclick=closeModal;
+  $('#pl').onclick=()=>{sfx.win();$('#det').style.display='none';cleanup=GAMES[id]($('#stage'))};
+}
+function closeModal(){if(cleanup)cleanup();cleanup=null;$('#md').classList.remove('open');$('#mb').innerHTML=''}
+$('#md').onclick=e=>{if(e.target.id==='md')closeModal()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ===== Games ===== */
+const GAMES={
+ttt(el){
+  let b,q,turn,over,mode='2p',sc={X:0,O:0};
+  el.innerHTML=`<div class="bar"><select id="m"><option value="2p">2 players</option><option value="easy">CPU Easy</option><option value="medium">CPU Medium</option><option value="hard">CPU Hard</option></select><span id="sc"></span></div><div class="tb">${'<button class="c"></button>'.repeat(9)}</div><p class="st" id="st"></p><p class="meta" style="text-align:center">Only 3 marks stay on the board</p><div class="bar"><button class="btn sm" id="r">Restart</button><button class="btn sm ghost" id="rs">Reset score</button></div>`;
+  const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]],cs=[...el.querySelectorAll('.c')];
+  const win=b=>L.find(l=>b[l[0]]&&b[l[0]]===b[l[1]]&&b[l[0]]===b[l[2]]);
+  const put=(b,q,p,i)=>{b[i]=p;q[p].push(i);if(q[p].length>3)b[q[p].shift()]=''};
+  const sim=(p,i)=>{const bb=[...b],qq={X:[...q.X],O:[...q.O]};put(bb,qq,p,i);return win(bb)};
+  const cpu=()=>{const e=b.map((v,i)=>v?-1:i).filter(i=>i>=0),rnd=()=>e[Math.random()*e.length|0];if(mode==='easy'||(mode==='medium'&&Math.random()<.4))return rnd();return e.find(i=>sim('O',i))??e.find(i=>sim('X',i))??(b[4]?rnd():4)};
+  const upd=()=>{cs.forEach((c,i)=>{c.textContent=b[i];c.style.opacity=(q.X.length===3&&q.X[0]===i)||(q.O.length===3&&q.O[0]===i)?.4:1});$('#sc').textContent=`X ${sc.X} | O ${sc.O}`};
+  const move=i=>{
+    if(over||b[i])return;put(b,q,turn,i);sfx.move();const w=win(b);
+    if(w){over=true;w.forEach(k=>cs[k].classList.add('w'));sc[turn]++;$('#st').textContent=turn+' '+tt('wins!');turn==='O'&&mode!=='2p'?sfx.lose():sfx.win()}
+    else{turn=turn==='X'?'O':'X';$('#st').textContent=tt('Turn')+': '+turn;if(mode!=='2p'&&turn==='O')setTimeout(()=>{if(!over)move(cpu())},400)}
+    upd();
+  };
+  const reset=()=>{b=Array(9).fill('');q={X:[],O:[]};turn='X';over=false;cs.forEach(c=>c.classList.remove('w'));$('#st').textContent=tt('Turn')+': X';upd()};
+  cs.forEach((c,i)=>c.onclick=()=>{if(mode!=='2p'&&turn==='O')return;move(i)});
+  el.querySelector('#m').onchange=e=>{mode=e.target.value;sc={X:0,O:0};reset()};
+  el.querySelector('#r').onclick=reset;el.querySelector('#rs').onclick=()=>{sc={X:0,O:0};reset()};
+  reset();
+},
+snake(el){
+  const N=15,C=20;let hs=ls.get('gz_snake',0),sn,d,nd,food,score,tm,run=false,sp;
+  el.innerHTML=`<div class="bar"><span>Score <b id="s">0</b></span><span>Best <b id="h">${hs}</b></span></div><canvas class="sn" width="300" height="300"></canvas><p class="st" id="st">Press Start</p><div class="bar"><button class="btn sm" id="a">Start</button><button class="btn sm ghost" id="p">Pause</button><button class="btn sm ghost" id="r">Restart</button></div><div class="pad"><span></span><button data-d="0,-1">▲</button><span></span><button data-d="-1,0">◀</button><button data-d="0,1">▼</button><button data-d="1,0">▶</button></div>`;
+  const cv=el.querySelector('canvas'),x=cv.getContext('2d');
+  const place=()=>{do{food={x:Math.random()*N|0,y:Math.random()*N|0}}while(sn.some(s=>s.x===food.x&&s.y===food.y))};
+  const init=()=>{clearInterval(tm);sn=[{x:7,y:7},{x:6,y:7}];d=nd={x:1,y:0};score=0;sp=150;run=false;place();$('#s').textContent=0;$('#st').textContent=tt('Press Start');delete $('#st').dataset.d;draw()};
+  const draw=(dead)=>{x.fillStyle='#0b0e1c';x.fillRect(0,0,300,300);const t=Date.now()/200;x.fillStyle='#ff4d79';x.beginPath();x.arc(food.x*C+10,food.y*C+10,6+Math.sin(t)*1.5,0,7);x.fill();sn.forEach((s,i)=>{x.fillStyle=dead?'#ff4d79':i?'#86e01e':'#4a4af0';x.fillRect(s.x*C+1,s.y*C+1,C-2,C-2)})};
+  const tick=()=>{
+    d=nd;const h={x:sn[0].x+d.x,y:sn[0].y+d.y};
+    if(h.x<0||h.y<0||h.x>=N||h.y>=N||sn.some(s=>s.x===h.x&&s.y===h.y)){clearInterval(tm);run=false;draw(true);sfx.lose();$('#st').textContent=tt('Game over! Score')+' '+score;$('#st').dataset.d=1;return}
+    sn.unshift(h);
+    if(h.x===food.x&&h.y===food.y){score+=10;sfx.eat();$('#s').textContent=score;if(score>hs){hs=score;ls.set('gz_snake',hs);$('#h').textContent=hs;render()}place();if(sp>60){sp-=5;clearInterval(tm);tm=setInterval(tick,sp)}}else sn.pop();
+    draw();
+  };
+  const start=()=>{if(run)return;if(!sn||$('#st').dataset.d)init();run=true;$('#st').textContent=tt('Go!');sfx.win();tm=setInterval(tick,sp)};
+  const dir=(dx,dy)=>{if(dx!==-d.x||dy!==-d.y)nd={x:dx,y:dy}};
+  const key=e=>{const m={ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0]}[e.key];if(m){e.preventDefault();dir(...m)}};
+  document.addEventListener('keydown',key);
+  el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>dir(...b.dataset.d.split(',').map(Number)));
+  el.querySelector('#a').onclick=start;
+  el.querySelector('#p').onclick=function(){if(run){clearInterval(tm);run=false;this.dataset.r=1;this.textContent=tt('Resume');$('#st').textContent=tt('Paused')}else if(this.dataset.r){delete this.dataset.r;this.textContent=tt('Pause');start()}};
+  el.querySelector('#r').onclick=()=>{init();start()};
+  init();
+  return()=>{clearInterval(tm);document.removeEventListener('keydown',key)};
+},
+rps(el){
+  const H=['🪨','📄','✂️'],N=['Rock','Paper','Scissors'].map(tt);let sc={w:0,l:0,d:0};
+  el.innerHTML=`<div class="bar rps">${H.map((h,i)=>`<button data-i="${i}" aria-label="${N[i]}">${h}</button>`).join('')}</div><div class="bar" style="font-size:54px" id="rs"><span>❔</span><span>VS</span><span>❔</span></div><p class="st" id="st">Choose your move</p><p class="st" id="sc" style="color:var(--tx)"></p>`;
+  const upd=()=>$('#sc').textContent=`${tt('Wins')} ${sc.w} | ${tt('Losses')} ${sc.l} | ${tt('Draws')} ${sc.d}`;upd();
+  el.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{
+    const p=+b.dataset.i,c=Math.random()*3|0,r=(p-c+3)%3;
+    el.querySelector('#rs').innerHTML=`<span>${H[p]}</span><span>VS</span><span>${H[c]}</span>`;
+    if(r===0){sc.d++;$('#st').textContent=tt('Draw!');sfx.flip()}else if(r===1){sc.w++;$('#st').textContent=`${tt('You win!')} ${N[p]} > ${N[c]}`;sfx.win()}else{sc.l++;$('#st').textContent=`${tt('You lose.')} ${N[c]} > ${N[p]}`;sfx.lose()}
+    upd();
+  });
+},
+memory(el){
+  const E=['🚀','👾','🎲','🏆','⚡','🔮','🎯','🍀'];let cards,open=[],moves,match,secs,tm,lock;
+  el.innerHTML=`<div class="bar"><span>⏱ <b id="t">0</b>s</span><span>Moves <b id="mv">0</b></span><span>Score <b id="sc">0</b></span></div><div class="mg" id="mg"></div><p class="st" id="st"></p><div class="bar"><button class="btn sm" id="r">Restart</button></div>`;
+  const init=()=>{clearInterval(tm);cards=[...E,...E].sort(()=>Math.random()-.5);open=[];moves=0;match=0;secs=0;lock=false;$('#st').textContent='';$('#t').textContent=0;$('#mv').textContent=0;$('#sc').textContent=0;
+    $('#mg').innerHTML=cards.map((c,i)=>`<button class="mc" data-i="${i}"><span class="fr">?</span><span class="bk">${c}</span></button>`).join('');
+    tm=setInterval(()=>{secs++;$('#t').textContent=secs},1000);
+    $$('.mc').forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.i;if(lock||b.classList.contains('f'))return;
+      b.classList.add('f');sfx.flip();open.push(i);
+      if(open.length===2){moves++;$('#mv').textContent=moves;lock=true;const[a,c]=open;
+        if(cards[a]===cards[c]){match++;[a,c].forEach(k=>$$('.mc')[k].classList.add('m'));open=[];lock=false;sfx.eat();$('#sc').textContent=match*100;
+          if(match===8){clearInterval(tm);sfx.win();$('#st').textContent=`${tt('You win!')} ${moves} ${tt('moves')}, ${secs}s 🎉`}}
+        else setTimeout(()=>{[a,c].forEach(k=>$$('.mc')[k].classList.remove('f'));open=[];lock=false},800)}
+    });
+  };
+  el.querySelector('#r').onclick=init;init();
+  return()=>clearInterval(tm);
+}};
+
+/* ===== Particles, counters, countdown ===== */
+(function(){const c=$('#pc'),x=c.getContext('2d');let P=[];const rs=()=>{c.width=c.offsetWidth;c.height=c.offsetHeight;P=Array.from({length:45},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2+1}))};rs();addEventListener('resize',rs);
+  (function f(){x.clearRect(0,0,c.width,c.height);x.fillStyle='rgba(134,224,30,.6)';P.forEach(p=>{p.x=(p.x+p.vx+c.width)%c.width;p.y=(p.y+p.vy+c.height)%c.height;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()});requestAnimationFrame(f)})()})();
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);const b=en.target,n=+b.dataset.n,dc=+b.dataset.d||0,s=b.dataset.s||'',t0=performance.now();(function f(t){const k=Math.min((t-t0)/1500,1);b.textContent=(n*k).toFixed(dc).replace(/\B(?=(\d{3})+(?!\d))/g,',')+s;if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.5});
+$$('[data-n]').forEach(b=>io.observe(b));
+function tick(){const n=new Date(),e=new Date(n);e.setHours(24,0,0,0);const s=Math.floor((e-n)/1000),p=v=>String(v).padStart(2,'0');$('#cd').textContent=`${p(s/3600|0)}:${p(s%3600/60|0)}:${p(s%60)}`}
+tick();setInterval(tick,1000);
+
+
+const R=[
+['Home','Башкы бет','Главная'],['All Games','Бардык оюндар','Все игры'],['Popular','Популярдуу','Популярные'],['Top Rated','Мыкты рейтинг','Топ рейтинг'],['Favorites','Тандалмалар','Избранное'],['Categories','Категориялар','Категории'],['About','Биз жөнүндө','О нас'],
+['Search games','Оюн издөө','Поиск игр'],['Games portal','Оюн порталы','Игровой портал'],['PLAY. COMPETE. HAVE FUN.','ОЙНО. ЖАРЫШ. ЫРААТТАН.','ИГРАЙ. СОРЕВНУЙСЯ. ВЕСЕЛИСЬ.'],
+['ITadis is a free arcade in your browser. Pick a game, beat your high score and save your favorites. No downloads, no sign-up.','ITadis — браузериңиздеги акысыз оюн залы. Оюн тандап, рекордуңузду жаңыртып, жактырганыңызды сактаңыз. Жүктөө да, катталуу да керек эмес.','ITadis — бесплатный игровой зал в браузере. Выбирайте игру, бейте рекорды и сохраняйте любимые. Без загрузок и регистрации.'],
+['Play Now','Азыр ойно','Играть сейчас'],['Play','Ойноо','Играть'],['Explore Games','Оюндарды көрүү','Смотреть игры'],['Featured Game: Tic-Tac-Toe','Тандалган оюн: Крестик-нолик','Игра дня: Крестики-нолики'],
+['Only 3 marks stay on the board. Think ahead!','Тактада 3 белги гана калат. Алдын ала ойлонуңуз!','На поле остаются только 3 знака. Думайте наперёд!'],['Only 3 marks stay on the board','Тактада 3 белги гана калат','На поле остаются только 3 знака'],
+['Game Categories','Оюн категориялары','Категории игр'],['Puzzle','Башваяк','Головоломки'],['Arcade','Аркада','Аркады'],['Classic','Классика','Классика'],['Action','Экшн','Экшен'],['Strategy','Стратегия','Стратегия'],['Multiplayer','Көп оюнчу','Мультиплеер'],['Cards','Карталар','Карты'],['Brain Games','Акыл оюндары','Игры для ума'],['Programming','Программалоо','Программирование'],['All','Бардыгы','Все'],
+['Sort by','Иреттөө','Сортировка'],['Most Popular','Эң популярдуу','Самые популярные'],['Highest Rated','Жогорку рейтинг','Высший рейтинг'],['Newest','Жаңылар','Новые'],['A-Z','А-Я','А-Я'],
+['Top Games','Мыкты оюндар','Лучшие игры'],['Popular Games','Популярдуу оюндар','Популярные игры'],['🔥 Popular','🔥 Популярдуу','🔥 Популярное'],['Did You Know?','Билесизби?','Знаете ли вы?'],
+['No games found.','Оюн табылган жок.','Игры не найдены.'],['No favorite games yet.','Азырынча тандалган оюн жок.','Пока нет избранных игр.'],['plays','ойноо','игр'],['players','оюнчу','игроков'],['points','упай','очков'],['You','Сиз','Вы'],
+['The first computer bug was a real moth found in 1947.','Биринчи «баг» 1947-жылы компьютерден табылган чыныгы көпөлөк болгон.','Первый «баг» — настоящая моль, найденная в компьютере в 1947 году.'],
+['Tic-Tac-Toe dates back thousands of years in early forms.','Крестик-нолик илгерки формада миңдеген жыл мурун пайда болгон.','Крестики-нолики в ранних формах известны тысячи лет.'],
+['Snake became extremely popular on mobile phones.','Жылан оюну телефондордо абдан популярдуу болгон.','Змейка стала очень популярной на телефонах.'],
+['2048 was created as a browser puzzle game.','2048 браузердик башваяк оюн катары жаралган.','2048 создали как браузерную головоломку.'],
+['Memory games can help train concentration.','Эс тутум оюндары көңүл топтоого жардам берет.','Игры на память тренируют концентрацию.'],
+['Arcade games played an important role in gaming history.','Аркада оюндары оюн тарыхында чоң роль ойногон.','Аркадные игры сыграли важную роль в истории игр.'],
+['🎮 Games','🎮 Оюндар','🎮 Игр'],['👥 Players','👥 Оюнчулар','👥 Игроков'],['🏆 Games Played','🏆 Ойнолгон оюндар','🏆 Сыграно игр'],['⭐ Average Rating','⭐ Орточо рейтинг','⭐ Средний рейтинг'],
+['Leaderboard','Лидерлер тактасы','Таблица лидеров'],['Daily Challenge','Күндүк чакырык','Ежедневный вызов'],["Today's Challenge: Beat the Snake high score!",'Бүгүнкү тапшырма: Жыландын рекордун жаңырт!','Задание дня: побейте рекорд в Змейке!'],['Reward: 🏅 Daily Champion badge','Сыйлык: 🏅 «Күндүн чемпиону» белгиси','Награда: 🏅 значок «Чемпион дня»'],['Play Snake','Жылан ойноо','Играть в Змейку'],
+['About ITadis','ITadis жөнүндө','Об ITadis'],['ITadis learning center game portal. Play, learn and train your logic. Your favorites, language, theme and high scores stay in your browser.','ITadis окуу борборунун оюн порталы. Ойноңуз, үйрөнүңүз, логикаңызды өстүрүңүз. Тандалмалар, тил, тема жана рекорддор браузериңизде сакталат.','Игровой портал учебного центра ITadis. Играйте, учитесь и развивайте логику. Избранное, язык, тема и рекорды хранятся в вашем браузере.'],
+['ITadis learning center: play, learn and code.','ITadis окуу борбору: ойноп, үйрөнүп, программалагыла.','Учебный центр ITadis: играй, учись и программируй.'],
+['Navigate','Навигация','Навигация'],['Legal','Укуктук маалымат','Правовая информация'],['Privacy Policy','Купуялуулук саясаты','Политика конфиденциальности'],['Terms of Service','Колдонуу шарттары','Условия использования'],['Contact','Байланыш','Контакты'],['© 2026 ITadis. All Rights Reserved.','© 2026 ITadis. Бардык укуктар корголгон.','© 2026 ITadis. Все права защищены.'],
+['Privacy Policy: this demo stores data only in your browser','Купуялуулук: маалымат браузериңизде гана сакталат','Конфиденциальность: данные хранятся только в вашем браузере'],['Terms of Service: play fair and have fun','Шарттар: адилеттүү ойноп, ырахат алыңыз','Условия: играйте честно и получайте удовольствие'],['Contact: hello@itadis.example','Байланыш: hello@itadis.example','Контакты: hello@itadis.example'],['Social links are demo only','Социалдык тармак шилтемелери демо гана','Ссылки на соцсети только для демо'],['Playing as Guest. Scores are saved in this browser.','Конок катары ойноп жатасыз. Упайлар ушул браузерде сакталат.','Вы играете как гость. Очки сохраняются в этом браузере.'],
+['Difficulty','Татаалдык','Сложность'],['Controls','Башкаруу','Управление'],['Facts','Кызыктуу фактылар','Интересные факты'],['Easy','Оңой','Лёгкий'],['Medium','Орто','Средний'],['Hard','Татаал','Сложный'],['♥ Remove favorite','♥ Тандалмадан алуу','♥ Убрать из избранного'],['♡ Add favorite','♡ Тандалмага кошуу','♡ В избранное'],
+['Score','Упай','Счёт'],['Best','Рекорд','Рекорд'],['Restart','Кайра баштоо','Заново'],['Reset score','Упайды тазалоо','Сбросить счёт'],['Start','Баштоо','Старт'],['Pause','Тыным','Пауза'],['Resume','Улантуу','Продолжить'],['Paused','Тыныгууда','Пауза'],['Press Start','«Баштоо» баскычын басыңыз','Нажмите «Старт»'],['Go!','Алга!','Вперёд!'],['Game over!','Оюн бүттү!','Игра окончена!'],['Game over! Score','Оюн бүттү! Упай','Игра окончена! Счёт'],['You win!','Жеңдиңиз!','Вы победили!'],['You lose.','Utулдуңуз.','Вы проиграли.'],['Draw!','Тең!','Ничья!'],['wins!','жеңди!','победил!'],['Turn','Кезек','Ход'],
+['2 players','2 оюнчу','2 игрока'],['CPU Easy','Компьютер: оңой','Компьютер: лёгкий'],['CPU Medium','Компьютер: орто','Компьютер: средний'],['CPU Hard','Компьютер: татаал','Компьютер: сложный'],
+['Wins','Жеңиш','Победы'],['Losses','Жеңилүү','Поражения'],['Draws','Тең','Ничьи'],['moves','жүрүш','ходов'],['Moves','Жүрүштөр','Ходы'],['Time','Убакыт','Время'],['Rock','Таш','Камень'],['Paper','Кагаз','Бумага'],['Scissors','Кайчы','Ножницы'],['Choose your move','Жестиңизди тандаңыз','Выберите жест'],
+['Swipe or use arrow keys','Экранды сүрүңүз же жебелерди колдонуңуз','Свайп или стрелки'],['Time is up!','Убакыт бүттү!','Время вышло!'],['Click to start','Баштоо үчүн басыңыз','Нажмите, чтобы начать'],['Wait for green...','Жашылды күтүңүз...','Ждите зелёный...'],['CLICK!','БАС!','ЖМИ!'],['Too early! Click to retry','Эрте! Кайра басыңыз','Рано! Нажмите ещё раз'],['Tap or press Space to flap','Экранды басыңыз же Space','Нажмите на экран или Space'],
+['What is the output?','Код эмне чыгарат?','Что выведет код?'],['Result','Жыйынтык','Результат'],['Check','Текшерүү','Проверить'],['Next','Кийинки','Дальше'],['Convert the number to binary','Санды экилик системага которуңуз','Переведите число в двоичный вид'],['Type the code above','Жогорудагы кодду териңиз','Наберите код выше']
+];
+const D={};R.forEach(r=>D[r[0]]=[r[1],r[2]]);
+let L=ls.get('gz_lang','ky');const li=()=>L==='ky'?0:1,tt=s=>D[s]?D[s][li()]:s;
+const tw=n=>{const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT);let x;while(x=w.nextNode()){const o=x._o||x.nodeValue.trim();if(D[o]){x._o=o;const v=tt(o),c=x.nodeValue.trim();if(c!==v)x.nodeValue=x.nodeValue.replace(c,()=>v)}}};
+const setL=()=>{document.documentElement.lang=L;$('#lg').textContent=L==='ky'?'РУС':'КЫР';$('#sq').placeholder=tt('Search games');document.title='ITadis | '+tt('Games portal');tw(document.body)};
+$('#lg').onclick=()=>{L=L==='ky'?'ru':'ky';ls.set('gz_lang',L);closeModal();render();setL()};
+new MutationObserver(()=>tw(document.body)).observe(document.body,{childList:true,subtree:true});
+Object.assign(GAMES,{
+g2048(el){
+ let b,sc,bs=ls.get('gz_2048',0),dead;
+ el.innerHTML=`<div class="bar"><span>Score <b id="s">0</b></span><span>Best <b id="h">${bs}</b></span></div><div class="gd" id="gd" style="grid-template-columns:repeat(4,70px)"></div><p class="st" id="st"></p><p class="meta" style="text-align:center">Swipe or use arrow keys</p><div class="bar"><button class="btn sm" id="r">Restart</button></div>`;
+ const gd=el.querySelector('#gd');
+ const draw=()=>{gd.innerHTML=b.map(v=>`<div class="tl" style="${v?`background:hsl(${210+Math.log2(v)*12},65%,${Math.max(28,58-Math.log2(v)*3)}%);color:#fff`:''}">${v||''}</div>`).join('');$('#s').textContent=sc;if(sc>bs){bs=sc;ls.set('gz_2048',bs);$('#h').textContent=bs}};
+ const add=()=>{const e=[];b.forEach((v,i)=>v||e.push(i));if(e.length)b[e[Math.random()*e.length|0]]=Math.random()<.9?2:4};
+ const row=r=>{const a=r.filter(Boolean),o=[];for(let i=0;i<a.length;i++){if(a[i]===a[i+1]){o.push(a[i]*2);sc+=a[i]*2;i++}else o.push(a[i])}while(o.length<4)o.push(0);return o};
+ const over=()=>!b.includes(0)&&b.every((v,i)=>v!==b[i+1]||i%4===3)&&b.every((v,i)=>v!==b[i+4]);
+ const mv=(dx,dy)=>{if(dead)return;const old=b.join();
+  for(let k=0;k<4;k++){const ix=[0,1,2,3].map(j=>dx?(dx>0?k*4+3-j:k*4+j):(dy>0?(3-j)*4+k:j*4+k));const r=row(ix.map(i=>b[i]));ix.forEach((i,j)=>b[i]=r[j])}
+  if(b.join()!==old){add();sfx.move();draw();if(b.includes(2048)){$('#st').textContent=tt('You win!');sfx.win()}else if(over()){dead=true;$('#st').textContent=tt('Game over!');sfx.lose()}}};
+ const key=e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m){e.preventDefault();mv(...m)}};
+ document.addEventListener('keydown',key);
+ let tx,ty;gd.ontouchstart=e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY};
+ gd.ontouchend=e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;Math.abs(dx)>Math.abs(dy)?mv(Math.sign(dx),0):mv(0,Math.sign(dy))};
+ const init=()=>{b=Array(16).fill(0);sc=0;dead=false;$('#st').textContent='';add();add();draw()};
+ el.querySelector('#r').onclick=init;init();return()=>document.removeEventListener('keydown',key);
+},
+c4(el){
+ let b,over;const W=7,H=6;
+ el.innerHTML=`<div class="gd" id="gd" style="grid-template-columns:repeat(7,42px)"></div><p class="st" id="st"></p><div class="bar"><button class="btn sm" id="r">Restart</button></div>`;
+ const win=(b,p)=>{for(let r=0;r<H;r++)for(let c=0;c<W;c++)for(const[dr,dc]of[[0,1],[1,0],[1,1],[1,-1]]){let k=0;while(k<4){const rr=r+dr*k,cc=c+dc*k;if(rr<0||rr>=H||cc<0||cc>=W||b[rr*W+cc]!==p)break;k++}if(k===4)return true}return false};
+ const drop=(b,c,p)=>{for(let r=H-1;r>=0;r--)if(!b[r*W+c]){b[r*W+c]=p;return true}return false};
+ const draw=()=>{el.querySelector('#gd').innerHTML=b.map((v,i)=>`<button class="cl" data-c="${i%W}" style="height:42px;padding:0;border-radius:50%;font-size:22px">${v===1?'🔴':v===2?'🟡':''}</button>`).join('')};
+ const cpu=()=>{const cols=[...Array(W).keys()].filter(c=>!b[c]);for(const p of[2,1])for(const c of cols){const t=[...b];drop(t,c,p);if(win(t,p))return c}return cols.sort((x,y)=>Math.abs(x-3)-Math.abs(y-3)+Math.random()*2-1)[0]};
+ const end=p=>{over=true;$('#st').textContent=p===1?tt('You win!'):p===2?tt('You lose.'):tt('Draw!');p===1?sfx.win():sfx.lose()};
+ el.querySelector('#gd').onclick=e=>{const k=e.target.closest('[data-c]');if(!k||over||!drop(b,+k.dataset.c,1))return;sfx.move();
+  if(win(b,1))end(1);else{const c=cpu();if(c!==undefined){drop(b,c,2);if(win(b,2))end(2)}if(!over&&!b.includes(0))end(0)}draw()};
+ const init=()=>{b=Array(42).fill(0);over=false;$('#st').textContent='';draw()};
+ el.querySelector('#r').onclick=init;init();
+},
+mole(el){
+ let sc,tl,cur,t1,t2;
+ el.innerHTML=`<div class="bar"><span>Time <b id="t">20</b></span><span>Score <b id="s">0</b></span></div><div class="gd" style="grid-template-columns:repeat(3,84px)">${[...Array(9)].map((_,i)=>`<button class="cl" data-m="${i}" style="height:84px;font-size:44px"></button>`).join('')}</div><p class="st" id="st"></p><div class="bar"><button class="btn sm" id="r">Start</button></div>`;
+ const cs=[...el.querySelectorAll('[data-m]')],stop=()=>{clearInterval(t1);clearInterval(t2)};
+ const show=()=>{cs.forEach(c=>c.textContent='');cur=Math.random()*9|0;cs[cur].textContent='🐹'};
+ cs.forEach((c,i)=>c.onclick=()=>{if(i===cur&&t1){sc++;cur=-1;c.textContent='💥';sfx.eat();$('#s').textContent=sc}});
+ el.querySelector('#r').onclick=()=>{stop();sc=0;tl=20;cur=-1;$('#s').textContent=0;$('#t').textContent=20;$('#st').textContent='';t2=setInterval(show,700);t1=setInterval(()=>{tl--;$('#t').textContent=tl;if(tl<=0){stop();t1=0;cs.forEach(c=>c.textContent='');$('#st').textContent=tt('Time is up!');sfx.win()}},1000)};
+ return stop;
+},
+react(el){
+ let s=0,t0,to,best=ls.get('gz_react',0);
+ el.innerHTML=`<button class="cl" id="bx" style="width:100%;height:180px;font-size:20px;background:#3a3f66;color:#fff">Click to start</button><p class="st" id="st"></p>`;
+ const bx=el.querySelector('#bx'),set=(c,t)=>{bx.style.background=c;bx.textContent=tt(t)},bs=()=>$('#st').textContent=best?tt('Best')+': '+best+' ms':'';
+ bs();
+ bx.onclick=()=>{
+  if(s===0){set('#c0392b','Wait for green...');s=1;to=setTimeout(()=>{set('#2e9e3f','CLICK!');t0=Date.now();s=2},1500+Math.random()*2500)}
+  else if(s===1){clearTimeout(to);set('#3a3f66','Too early! Click to retry');s=0;sfx.lose()}
+  else{const ms=Date.now()-t0;s=0;bx.style.background='#3a3f66';bx.textContent=ms+' ms';if(!best||ms<best){best=ms;ls.set('gz_react',ms)}bs();sfx.win()}};
+ return()=>clearTimeout(to);
+},
+flappy(el){
+ let y,v,pp,sc,f,run,dead,raf,hs=ls.get('gz_flappy',0);
+ el.innerHTML=`<div class="bar"><span>Score <b id="s">0</b></span><span>Best <b id="h">${hs}</b></span></div><canvas class="sn" width="280" height="400" style="touch-action:none"></canvas><p class="st" id="st">Tap or press Space to flap</p>`;
+ const x=el.querySelector('canvas').getContext('2d');
+ const draw=()=>{x.fillStyle='#0b0e1c';x.fillRect(0,0,280,400);x.fillStyle='#86e01e';pp.forEach(p=>{x.fillRect(p.x,0,40,p.g);x.fillRect(p.x,p.g+110,40,400)});x.fillStyle=dead?'#ff4d79':'#ffd23f';x.beginPath();x.arc(60,y,10,0,7);x.fill()};
+ const init=()=>{y=200;v=0;pp=[];sc=0;f=0;run=false;dead=false;$('#s').textContent=0;draw()};
+ const loop=()=>{v+=.38;y+=v;if(++f%90===0)pp.push({x:280,g:60+Math.random()*180});pp.forEach(p=>{p.x-=2;if(!p.d&&p.x+40<50){p.d=1;sc++;$('#s').textContent=sc;sfx.eat()}});pp=pp.filter(p=>p.x>-40);
+  if(y<10||y>390||pp.some(p=>p.x<70&&p.x+40>50&&(y-10<p.g||y+10>p.g+110))){dead=true;run=false;draw();sfx.lose();if(sc>hs){hs=sc;ls.set('gz_flappy',hs);$('#h').textContent=hs}$('#st').textContent=tt('Game over!');return}
+  draw();raf=requestAnimationFrame(loop)};
+ const flap=e=>{if(e.code&&e.code!=='Space')return;e.preventDefault();if(dead)init();if(!run){run=true;$('#st').textContent='';loop()}v=-6;sfx.flip()};
+ el.querySelector('canvas').onpointerdown=flap;document.addEventListener('keydown',flap);
+ init();return()=>{cancelAnimationFrame(raf);document.removeEventListener('keydown',flap)};
+},
+quiz(el){
+ const Q=[['console.log(2+"2")',['4','22','NaN'],1],['console.log(typeof null)',['null','object','undefined'],1],['print(len("ab"*3))',['2','6','ab'],1],['console.log(0.1+0.2===0.3)',['true','false','NaN'],1],['print(2**3)',['6','8','9'],1],['console.log(10%3)',['1','3','0'],0],['console.log("5"-2)',['3','52','NaN'],0],['console.log([1,2,3].length)',['2','3','4'],1]];
+ let qs,i,sc;
+ const nx=()=>{if(i>=5){el.innerHTML=`<p class="st" style="font-size:24px">${tt('Result')}: ${sc}/5</p><div class="bar"><button class="btn sm" id="r">Restart</button></div>`;sc>=4?sfx.win():sfx.lose();el.querySelector('#r').onclick=init;return}
+  const[c,o,a]=qs[i];el.innerHTML=`<p class="meta">${i+1}/5 | ${tt('Score')} ${sc}</p><p>${tt('What is the output?')}</p><pre style="background:var(--gl);padding:12px;border-radius:10px;overflow:auto">${c}</pre><div class="bar" style="flex-direction:column">${o.map((z,k)=>`<button class="btn ghost" style="width:100%" data-k="${k}">${z}</button>`).join('')}</div>`;
+  el.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const ok=+b.dataset.k===a;ok?(sc++,sfx.eat()):sfx.lose();b.style.background=ok?'#2e9e3f':'#c0392b';el.querySelectorAll('[data-k]').forEach(z=>z.disabled=true);i++;setTimeout(nx,800)})};
+ const init=()=>{qs=[...Q].sort(()=>Math.random()-.5);i=0;sc=0;nx()};init();
+},
+bin(el){
+ let n,bits,sc=0;
+ el.innerHTML=`<div class="bar"><span>Score <b id="s">0</b></span></div><p class="st" style="font-size:48px;color:var(--tx)" id="n"></p><div class="bar" id="bt"></div><p class="st" id="st">Convert the number to binary</p><div class="bar"><button class="btn sm" id="ck">Check</button></div>`;
+ const draw=()=>{$('#n').textContent=n;$('#bt').innerHTML=bits.map((v,i)=>`<button class="cl" data-b="${i}" style="width:44px;height:60px;${v?'background:#86e01e;color:#06070d':''}">${v}<br><small>${32>>i}</small></button>`).join('')};
+ const nx=()=>{n=1+Math.random()*63|0;bits=[0,0,0,0,0,0];draw()};
+ $('#bt').onclick=e=>{const k=e.target.closest('[data-b]');if(k){bits[+k.dataset.b]^=1;sfx.click();draw()}};
+ $('#ck').onclick=()=>{if(parseInt(bits.join(''),2)===n){sc++;$('#s').textContent=sc;sfx.win();$('#st').textContent=tt('You win!');nx()}else{sfx.lose();$('#st').textContent=tt('Draw!').replace(/.*/,'✗')}};
+ nx();
+},
+type(el){
+ const S=['for(let i=0;i<5;i++){}','<div class="box"></div>','print("Hello, ITadis!")','const sum=(a,b)=>a+b;','if(x>0){return x}','SELECT * FROM users;'];
+ let s,t0;
+ el.innerHTML=`<pre id="sn" style="font-size:18px;white-space:pre-wrap;word-break:break-all"></pre><input id="in" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;padding:12px;border-radius:10px;border:2px solid var(--bd);background:var(--gl);font:16px monospace"><p class="st" id="st">Type the code above</p><div class="bar"><button class="btn sm" id="r">Next</button></div>`;
+ const inp=el.querySelector('#in'),nx=()=>{s=S[Math.random()*S.length|0];$('#sn').textContent=s;inp.value='';inp.style.borderColor='';t0=0;$('#st').textContent=tt('Type the code above');inp.focus()};
+ inp.oninput=()=>{if(!t0)t0=Date.now();const ok=s.startsWith(inp.value);inp.style.borderColor=ok?'#86e01e':'#ff4d79';if(inp.value===s){const sec=(Date.now()-t0)/1000;$('#st').textContent=`${sec.toFixed(1)} s | ${Math.round(s.length/sec*60)} CPM`;sfx.win()}};
+ el.querySelector('#r').onclick=nx;nx();
+}});
+applyTheme();applySound();render();setL();
+</script>
+</body>
+</html>
